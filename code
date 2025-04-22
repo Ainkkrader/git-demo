@@ -2,14 +2,15 @@
 
 set -euo pipefail
 
-# Variables
+# === Конфігурації ===
+REPO_URL="git@github.com:Ainkkrader/DevOps-Task0.git"
+LOCAL_REPO_DIR="/tmp/repo"
 BACKUP_DIR="$HOME/backup"
 VERSION_FILE="$BACKUP_DIR/versions.json"
-REPO_URL="<YOUR_SSH_REPO_URL>"
-LOCAL_REPO_DIR="/tmp/repo"
-MAX_BACKUPS=0
 
-# Functions
+# === Функції ===
+
+# Функція для інкременту версії
 increment_version() {
   local version=$1
   local major=$(echo "$version" | cut -d. -f1)
@@ -24,16 +25,19 @@ increment_version() {
   echo "$major.$minor.$patch"
 }
 
+# Ініціалізація файлу версій
 initialize_version_file() {
   if [ ! -f "$VERSION_FILE" ]; then
     echo "[]" > "$VERSION_FILE"
   fi
 }
 
+# Отримання останньої версії
 get_latest_version() {
   jq -r '.[-1].version // "1.0.0"' "$VERSION_FILE"
 }
 
+# Архівування репозиторію
 archive_repo() {
   local version=$1
   local archive_name="devops_internship_${version}.tar.gz"
@@ -41,6 +45,7 @@ archive_repo() {
   echo "$archive_name"
 }
 
+# Запис інформації про бекап
 write_backup_info() {
   local version=$1
   local archive_name=$2
@@ -51,6 +56,7 @@ write_backup_info() {
     "$VERSION_FILE" > "$VERSION_FILE.tmp" && mv "$VERSION_FILE.tmp" "$VERSION_FILE"
 }
 
+# Очищення старих бекапів
 prune_backups() {
   local max_backups=$1
   if [ $max_backups -le 0 ]; then
@@ -62,21 +68,22 @@ prune_backups() {
   fi
 }
 
-# Main
+# === Головна частина скрипта ===
+
 mkdir -p "$BACKUP_DIR"
 initialize_version_file
 
-# Clone the repository
+# Клонування репозиторію
 rm -rf "$LOCAL_REPO_DIR"
 git clone "$REPO_URL" "$LOCAL_REPO_DIR"
 
-# Increment version and archive
+# Інкремент версії та створення архіву
 latest_version=$(get_latest_version)
 new_version=$(increment_version "$latest_version")
 archive_name=$(archive_repo "$new_version")
 write_backup_info "$new_version" "$archive_name"
 
-# Handle --max-backups
+# Обробка аргументу --max-backups
 if [[ "${1-}" == "--max-backups" ]]; then
   MAX_BACKUPS=${2-0}
   prune_backups "$MAX_BACKUPS"
