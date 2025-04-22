@@ -1,0 +1,83 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# Variables
+BACKUP_DIR="$HOME/backup"
+VERSION_FILE="$BACKUP_DIR/versions.json"
+REPO_URL="<YOUR_SSH_REPO_URL>"
+LOCAL_REPO_DIR="/tmp/repo"
+MAX_BACKUPS=0
+
+# Functions
+increment_version() {
+  local version=$1
+  local major=$(echo "$version" | cut -d. -f1)
+  local minor=$(echo "$version" | cut -d. -f2)
+  local patch=$(echo "$version" | cut -d. -f3)
+
+  patch=$((patch + 1))
+  if [ $patch -ge 100 ]; then
+    patch=0
+    minor=$((minor + 1))
+  fi
+  echo "$major.$minor.$patch"
+}
+
+initialize_version_file() {
+  if [ ! -f "$VERSION_FILE" ]; then
+    echo "[]" > "$VERSION_FILE"
+  fi
+}
+
+get_latest_version() {
+  jq -r '.[-1].version // "1.0.0"' "$VERSION_FILE"
+}
+
+archive_repo() {
+  local version=$1
+  local archive_name="devops_internship_${version}.tar.gz"
+  tar -czf "$BACKUP_DIR/$archive_name" -C "$LOCAL_REPO_DIR" .
+  echo "$archive_name"
+}
+
+write_backup_info() {
+  local version=$1
+  local archive_name=$2
+  local size=$(stat --format="%s" "$BACKUP_DIR/$archive_name")
+  local date=$(date +%d.%m.%Y)
+  jq --arg version "$version" --arg date "$date" --arg size "$size" --arg filename "$archive_name" \
+    '. += [{"version": $version, "date": $date, "size": ($size | tonumber), "filename": $filename}]' \
+    "$VERSION_FILE" > "$VERSION_FILE.tmp" && mv "$VERSION_FILE.tmp" "$VERSION_FILE"
+}
+
+prune_backups() {
+  local max_backups=$1
+  if [ $max_backups -le 0 ]; then
+    rm -f "$BACKUP_DIR"/*.tar.gz
+  else
+    local files_to_remove
+    files_to_remove=$(ls -t "$BACKUP_DIR"/*.tar.gz | tail -n +$((max_backups + 1)))
+    rm -f $files_to_remove
+  fi
+}
+
+# Main
+mkdir -p "$BACKUP_DIR"
+initialize_version_file
+
+# Clone the repository
+rm -rf "$LOCAL_REPO_DIR"
+git clone "$REPO_URL" "$LOCAL_REPO_DIR"
+
+# Increment version and archive
+latest_version=$(get_latest_version)
+new_version=$(increment_version "$latest_version")
+archive_name=$(archive_repo "$new_version")
+write_backup_info "$new_version" "$archive_name"
+
+# Handle --max-backups
+if [[ "${1-}" == "--max-backups" ]]; then
+  MAX_BACKUPS=${2-0}
+  prune_backups "$MAX_BACKUPS"
+fi
