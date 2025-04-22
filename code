@@ -88,3 +88,8 @@ if [[ "${1-}" == "--max-backups" ]]; then
   MAX_BACKUPS=${2-0}
   prune_backups "$MAX_BACKUPS"
 fi
+
+
+mkdir -p ~/.docker/cli-plugins
+curl -Lo ~/.docker/cli-plugins/docker-buildx https://github.com/docker/buildx/releases/latest/download/docker-buildx-linux-amd64
+chmod +x ~/.docker/cli-plugins/docker-buildx
