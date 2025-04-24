@@ -1,6 +1,5 @@
 # DevOps-Task0
 
-This repository contains the setup and steps for completing the initial DevOps task. Follow the instructions below to set up the environment, install required tools, and document the process.
 
 ---
 
@@ -10,7 +9,6 @@ This repository contains the setup and steps for completing the initial DevOps t
 3. [Environment Setup](#environment-setup)
 4. [Required Tools Installation](#required-tools-installation)
 5. [Screenshots](#screenshots)
-6. [Pull Request](#pull-request)
 
 ---
 
@@ -133,17 +131,38 @@ This task involves creating a private GitHub repository, setting up a UNIX-like 
 ## Screenshots
 
 
-### Repository Creation
-![Repository Creation](https://github.com/Ainkkrader/git-demo/blob/main/winserv.PNG)
+### Creating VM Step 1
+![Creating VM Step 1](https://github.com/Ainkkrader/DevOps-Task0/blob/main/crvmsp1.PNG)
 
-### Adding Collaborators
-![Adding Collaborators](screenshots/adding_collaborators.png)
+### Creating VM Step 2
+![Creating VM Step 2](https://github.com/Ainkkrader/DevOps-Task0/blob/main/crvmsp2.PNG)
 
-### Virtual Machine Setup
-![Virtual Machine Setup](screenshots/virtual_machine_setup.png)
+### Creating VM Step 3
+![Creating VM Step 3](https://github.com/Ainkkrader/DevOps-Task0/blob/main/crvmsp3.PNG)
 
-### Tools Installation
-![Tools Installation](screenshots/tools_installation.png)
+### Creating VM Step 4
+![Creating VM Step 4](https://github.com/Ainkkrader/DevOps-Task0/blob/main/crvm4.PNG)
+
+### Version Docker
+![Version Docker](https://github.com/Ainkkrader/DevOps-Task0/blob/main/docker.PNG)
+
+### Version Docker Compose
+![Version Docker Compose](https://github.com/Ainkkrader/DevOps-Task0/blob/main/docker%20compose.PNG)
+
+### Version Git
+![Version Git](https://github.com/Ainkkrader/DevOps-Task0/blob/main/git.PNG)
+
+### Version Git CLI
+![Version Git CLI](https://github.com/Ainkkrader/DevOps-Task0/blob/main/docker%20compose.PNG)
+
+### Version Nginx
+![Version Nginx](https://github.com/Ainkkrader/DevOps-Task0/blob/main/nginx.PNG)
+
+### Version AWS 
+![Version AWS](https://github.com/Ainkkrader/DevOps-Task0/blob/main/aws.PNG)
+
+### Version Terraform 
+![Version Terraform](https://github.com/Ainkkrader/DevOps-Task0/blob/main/terraform-version.PNG)
 
 ---
 
