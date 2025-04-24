@@ -124,12 +124,8 @@ This task involves creating a private GitHub repository, setting up a UNIX-like 
 5. **AWS CLI:**
    ```bash
    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-  unzip awscliv2.zip
-  sudo ./aws/install
-  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-  unzip awscliv2.zip
-  sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
-  aws --version
+   sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+   aws --version
    ```
 
 ---
