@@ -62,14 +62,12 @@ This task involves creating a private GitHub repository, setting up a UNIX-like 
 
 ## Environment Setup
 1. **Install Virtualization Tool:**
-   - Recommended tools:
+   - Recommended tool:
      - [VirtualBox](https://www.virtualbox.org/)
-     - [VMware Workstation Player](https://www.vmware.com/products/workstation-player.html)
-     - [Hyper-V](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/about/)
-
+    
 2. **Install UNIX-Like OS:**
    - Recommended OS: **Ubuntu 24.04**.
-   - Install it on your virtual machine.
+   - Install it on virtual machine.
 
 3. **Configure the OS:**
    - Update the system:
@@ -81,39 +79,57 @@ This task involves creating a private GitHub repository, setting up a UNIX-like 
 
 ## Required Tools Installation
 
-1. **Docker:**
+1. **Docker and Docker Compose:**
    ```bash
-   sudo apt install docker.io
+   sudo apt install docker.io -y
+    DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+    mkdir -p $DOCKER_CONFIG/cli-plugins
+     curl -SL https://github.com/docker/compose/releases/download/v2.35.0/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-     plugins/docker-compose
+   chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose 
+   docker --version
+   docker-compose --version
    ```
 
-2. **Docker Compose:**
+2. **Terraform:**
    ```bash
-   sudo apt install docker-compose
+   sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
+    wget -O- https://apt.releases.hashicorp.com/gpg | \
+    gpg --dearmor | \
+    sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
+    gpg --no-default-keyring \
+    --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg \
+    --fingerprint
+    echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
+    https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+    sudo tee /etc/apt/sources.list.d/hashicorp.list
+    sudo apt update
+    sudo apt-get install terraform
+    terraform --version
    ```
 
-3. **Terraform:**
+3. **Git and GitHub CLI:**
    ```bash
-   curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-   sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-   sudo apt update && sudo apt install terraform
+   sudo apt install git -y
+    sudo apt install gh -y
+    git --version
+    gh --version
    ```
 
-4. **Git and GitHub CLI:**
+4. **Nginx:**
    ```bash
-   sudo apt install git
-   sudo apt install gh
+   sudo apt install nginx -y
+    sudo systemctl status nginx
    ```
 
-5. **Nginx:**
-   ```bash
-   sudo apt install nginx
-   ```
-
-6. **AWS CLI:**
+5. **AWS CLI:**
    ```bash
    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-   unzip awscliv2.zip
-   sudo ./aws/install
+  unzip awscliv2.zip
+  sudo ./aws/install
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  unzip awscliv2.zip
+  sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+  aws --version
    ```
 
 ---
