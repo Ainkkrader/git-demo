@@ -131,10 +131,10 @@ This task involves creating a private GitHub repository, setting up a UNIX-like 
 ---
 
 ## Screenshots
-Below are placeholders for screenshots. Replace them with actual links once uploaded.
+
 
 ### Repository Creation
-![Repository Creation](screenshots/repository_creation.png)
+![Repository Creation](https://github.com/Ainkkrader/git-demo/blob/main/winserv.PNG)
 
 ### Adding Collaborators
 ![Adding Collaborators](screenshots/adding_collaborators.png)
@@ -147,18 +147,4 @@ Below are placeholders for screenshots. Replace them with actual links once uplo
 
 ---
 
-## Pull Request
-1. Push changes to the `DO_0` branch:
-   ```bash
-   git push origin DO_0
-   ```
 
-2. Create a Pull Request (PR) from `DO_0` to the `main` branch.
-   - Assign mentors to review the PR.
-
----
-
-## Notes
-- Ensure all commands work as expected.
-- Document any issues encountered and how they were resolved.
-- Keep the `README.md` updated with accurate information.
